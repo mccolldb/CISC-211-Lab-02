@@ -11,7 +11,7 @@
 /* create a string */
     
 /*** STUDENTS: HINT: this is the string that the C code prints out!  **/
-nameStr: .asciz "Hello. My name is Inigo Montoya."  
+nameStr: .asciz "Hello. My name is David McColl."  
  
 /* initialize a global variable that C can access to print the nameStr */
 .global nameStrPtr
@@ -54,7 +54,7 @@ asmFunc:
 
     
     /*** STUDENTS: Place your code BELOW this line!!! **************/
-
+    ADD R0,R0,R1  /* add inputs (R0,R1) --> output R0 */
     
     /*** STUDENTS: Place your code ABOVE this line!!! **************/
     
