@@ -24,7 +24,8 @@ nameStrPtr: .word nameStr   /* Assign the mem loc of nameStr to nameSrPtr */
 
 /* Tell the assembler to allow both 16b and 32b extended Thumb instructions */
 .syntax unified
-
+.cpu cortex-m4
+.thumb
     
 /********************************************************************
 function name: asmFunc
@@ -47,29 +48,26 @@ where:
 ********************************************************************/    
 .global asmFunc
 .type asmFunc,%function
+.thumb_func
 asmFunc:   
+    push {r4-r7,LR} /* save the caller's registers */
 
-    /* save the caller's registers, as required by the ARM calling convention */
-    push {r4-r11,LR}
-
-    
     /*** STUDENTS: Place your code BELOW this line!!! **************/
-    ADD R0,R0,R1  /* add inputs (R0,R1) --> output R0 */
-    
+    ADD R0,R0,R1  /* add inputs (R0,R1) --> output R0 */    
     /*** STUDENTS: Place your code ABOVE this line!!! **************/
     
-    /* restore the caller's registers, as required by the 
-     * ARM calling convention 
-     */
-    pop {r4-r11,LR}
-
-    mov pc, lr	 /* asmFunc return to caller */
+    pop {r4-r7,PC} /* restore the caller's registers  and return */
    
-
 /**********************************************************************/   
 .end  /* The assembler will not process anything after this directive!!! */
-           
 
+ dis assemble resulting ELF file: cd CISC-211-Lab-02/Lab-02-starter/hex 
+ arm-none-eabi-objdump -d Lab-02-starter.X.debug.elf  > Lab-02-starter.X.debug.dis
 
+00001e74 <asmFunc>:
+    1e74:	b5f0      	push	{r4, r5, r6, r7, lr}
+    1e76:	4408      	add	r0, r1
+    1e78:	bdf0      	pop	{r4, r5, r6, r7, pc}
+    1e7a:	bf00      	nop
 
 
